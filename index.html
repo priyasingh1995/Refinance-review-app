@@ -506,7 +506,7 @@ async function ask(){
   t.innerHTML='<div class="vis-thinking">Analysing with Slack context…</div>';
   msgs.appendChild(t);msgs.scrollTop=msgs.scrollHeight;
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'REDACTED_ANTHROPIC_API_KEY','anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM,messages:[{role:'user',content:q}]})});
+    const isLocal=location.hostname==='localhost'; const API_KEY='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'; const url=isLocal?'https://api.anthropic.com/v1/messages':'/.netlify/functions/ask'; const headers=isLocal?{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01'}:{'Content-Type':'application/json'}; const res=await fetch(url,{method:'POST',headers,body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM,messages:[{role:'user',content:q}]})});
     const data=await res.json();
     const raw=data.content?.find(b=>b.type==='text')?.text||'{}';
     let parsed;try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());}catch{parsed={type:'text',content:raw};}
