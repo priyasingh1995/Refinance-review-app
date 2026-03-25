@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refinance Review · March 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1a2356; --navy-light: #242f6b; --ice: #c8d8f8; --ice-dim: rgba(200,216,248,0.55);
+  --bg: #f2f0eb; --bg2: #e8e5de; --white: #ffffff;
+  --text: #1a1916; --text2: #6b6960; --text3: #9e9b92;
+  --green: #2d7a4f; --green-bg: #e8f5ee;
+  --red: #c0392b; --red-bg: #fdecea;
+  --amber: #b5620a; --amber-bg: #fdf3e3;
+  --border: rgba(0,0,0,0.08); --radius: 12px; --shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 13px; line-height: 1.5; height: 100vh; overflow: hidden; }
+.shell { display: flex; height: 100vh; }
+.sidebar { width: 210px; min-width: 210px; background: var(--navy); display: flex; flex-direction: column; overflow-y: auto; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.content-area { flex: 1; overflow-y: auto; padding: 28px 28px 16px; }
+.qa-zone { background: var(--white); border-top: 1px solid var(--border); }
+
+/* SIDEBAR */
+.logo-bar { padding: 20px 18px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.logo-bar h1 { font-size: 12px; font-weight: 600; color: var(--ice); letter-spacing: 0.02em; line-height: 1.5; }
+.logo-bar p { font-size: 10px; color: var(--ice-dim); margin-top: 2px; font-family: 'DM Mono', monospace; }
+.nav-group { padding: 14px 0 4px; }
+.nav-group-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(200,216,248,0.35); padding: 0 18px 6px; }
+.nav-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 8px 18px; background: none; border: none; cursor: pointer; color: rgba(200,216,248,0.6); font-family: 'DM Sans', sans-serif; font-size: 12px; text-align: left; border-left: 2px solid transparent; transition: all 0.15s; }
+.nav-btn:hover { color: var(--ice); background: rgba(200,216,248,0.07); }
+.nav-btn.active { color: var(--ice); border-left-color: var(--ice); background: rgba(200,216,248,0.1); font-weight: 500; }
+.nav-pill { font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 10px; }
+.pill-g { background: rgba(45,122,79,0.3); color: #7dd3a8; }
+.pill-r { background: rgba(192,57,43,0.3); color: #f4a49c; }
+.pill-a { background: rgba(181,98,10,0.3); color: #f5c87a; }
+
+/* SECTIONS */
+.section { display: none; animation: fadeIn 0.2s ease; }
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+.page-header { margin-bottom: 20px; }
+.page-title { font-size: 20px; font-weight: 600; }
+.page-sub { font-size: 12px; color: var(--text3); margin-top: 2px; font-family: 'DM Mono', monospace; }
+
+/* STAT CARDS */
+.stat-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap: 10px; margin-bottom: 20px; }
+.stat-card { background: var(--white); border-radius: var(--radius); padding: 14px 16px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+.stat-lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+.stat-val { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
+.stat-delta { font-size: 10px; margin-top: 5px; font-family: 'DM Mono', monospace; }
+.up { color: var(--green); } .down { color: var(--red); } .flat { color: var(--text3); }
+
+/* SIGNALS */
+.signals { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.signal { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-radius: 10px; font-size: 12px; line-height: 1.6; }
+.signal.g { background: var(--green-bg); border-left: 3px solid var(--green); }
+.signal.r { background: var(--red-bg); border-left: 3px solid var(--red); }
+.signal.a { background: var(--amber-bg); border-left: 3px solid var(--amber); }
+.signal-ico { font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+
+/* TABLE */
+.tbl-wrap { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; margin-bottom: 16px; box-shadow: var(--shadow); }
+.tbl-head { padding: 11px 16px; font-size: 11px; font-weight: 600; border-bottom: 1px solid var(--border); color: var(--text2); letter-spacing: 0.02em; }
+table { width: 100%; border-collapse: collapse; }
+th { background: var(--bg); font-size: 10px; font-weight: 600; color: var(--text3); padding: 8px 12px; text-align: right; border-bottom: 1px solid var(--border); letter-spacing: 0.04em; text-transform: uppercase; }
+th:first-child { text-align: left; }
+td { padding: 8px 12px; font-size: 12px; text-align: right; border-bottom: 1px solid rgba(0,0,0,0.04); }
+td:first-child { text-align: left; font-weight: 500; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg); }
+tr.total-row td { font-weight: 600; background: var(--bg); }
+.td-up { color: var(--green); font-family: 'DM Mono', monospace; font-size: 11px; }
+.td-dn { color: var(--red); font-family: 'DM Mono', monospace; font-size: 11px; }
+.td-fl { color: var(--text3); font-size: 11px; }
+
+/* FUNNEL */
+.funnel-block { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 16px; margin-bottom: 16px; box-shadow: var(--shadow); }
+.funnel-title-row { font-size: 11px; font-weight: 600; color: var(--text2); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 12px; }
+.f-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+.f-lbl { width: 130px; font-size: 11px; color: var(--text2); text-align: right; flex-shrink: 0; }
+.f-track { flex: 1; background: var(--bg2); border-radius: 5px; height: 22px; overflow: hidden; }
+.f-bar { height: 100%; border-radius: 5px; display: flex; align-items: center; padding-left: 8px; font-size: 10px; font-weight: 500; color: white; min-width: 2px; }
+.f-pct { width: 40px; text-align: right; font-size: 10px; color: var(--text3); flex-shrink: 0; }
+
+/* REV */
+.rev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.rev-card { background: var(--white); border-radius: var(--radius); padding: 14px 16px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+.rev-lbl { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.rev-val { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.rev-sub { font-size: 11px; color: var(--text3); margin-top: 3px; font-family: 'DM Mono', monospace; }
+
+/* Q&A */
+.qa-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 6px; border-bottom: 1px solid var(--border); }
+.qa-header-left { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; color: var(--text2); letter-spacing: 0.05em; text-transform: uppercase; }
+.qa-pulse { width: 7px; height: 7px; border-radius: 50%; background: var(--green); position: relative; }
+.qa-pulse::after { content:''; position:absolute; inset:-3px; border-radius:50%; border:2px solid var(--green); opacity:0.4; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:0.4} 50%{transform:scale(1.4);opacity:0} }
+.qa-chips { padding: 6px 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { font-size: 11px; padding: 4px 10px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); cursor: pointer; color: var(--text2); transition: all 0.15s; white-space: nowrap; }
+.chip:hover { background: var(--navy); color: var(--ice); border-color: var(--navy); }
+.qa-messages { height: 140px; overflow-y: auto; padding: 8px 14px; display: flex; flex-direction: column; gap: 8px; }
+.qa-messages::-webkit-scrollbar { width: 3px; } .qa-messages::-webkit-scrollbar-thumb { background: var(--bg2); border-radius: 3px; }
+.msg-user { align-self: flex-end; background: var(--navy); color: var(--ice); border-radius: 12px 12px 3px 12px; padding: 8px 12px; font-size: 12px; max-width: 60%; }
+.msg-visual { align-self: flex-start; max-width: 88%; width: 100%; }
+.vis-thinking { font-size: 11px; color: var(--text3); font-style: italic; padding: 6px 0; }
+.vis-text { background: var(--bg); border-radius: 3px 12px 12px 12px; padding: 10px 14px; font-size: 12px; color: var(--text); line-height: 1.6; border-left: 3px solid var(--navy); }
+.vis-stat-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+.vis-stat { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; min-width: 110px; box-shadow: var(--shadow); }
+.vs-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 3px; }
+.vs-val { font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+.vs-delta { font-size: 10px; margin-top: 2px; font-family: 'DM Mono', monospace; }
+.vis-compare { display: flex; gap: 8px; align-items: stretch; }
+.vc-card { flex: 1; border-radius: 10px; padding: 10px 14px; border: 1px solid var(--border); background: var(--bg); }
+.vc-period { font-size: 9px; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; color: var(--text3); }
+.vc-val { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.vc-note { font-size: 10px; margin-top: 3px; color: var(--text3); }
+.vc-arrow { display: flex; align-items: center; font-size: 18px; color: var(--text3); padding: 0 4px; }
+.vis-bars { background: var(--white); border-radius: 10px; border: 1px solid var(--border); padding: 12px 14px; box-shadow: var(--shadow); }
+.vb-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.vb-lbl { width: 90px; font-size: 10px; color: var(--text2); text-align: right; flex-shrink: 0; }
+.vb-track { flex: 1; background: var(--bg2); border-radius: 4px; height: 18px; }
+.vb-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 6px; font-size: 9px; font-weight: 600; color: white; }
+.vb-val { width: 55px; font-size: 10px; font-family: 'DM Mono', monospace; text-align: right; color: var(--text2); flex-shrink: 0; }
+.vis-actions { display: flex; flex-direction: column; gap: 6px; }
+.va-card { background: var(--white); border-radius: 10px; border: 1px solid var(--border); padding: 9px 12px; display: flex; gap: 10px; align-items: flex-start; box-shadow: var(--shadow); }
+.va-num { width: 20px; height: 20px; border-radius: 50%; background: var(--navy); color: var(--ice); font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.va-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+.va-detail { font-size: 11px; color: var(--text2); line-height: 1.4; }
+.va-owner { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--navy); margin-top: 3px; }
+.vis-insight { background: var(--amber-bg); border-left: 3px solid var(--amber); border-radius: 3px 10px 10px 3px; padding: 10px 14px; font-size: 12px; line-height: 1.6; color: var(--text); }
+
+/* INPUT */
+.qa-input-row { display: flex; gap: 8px; padding: 8px 12px 10px; align-items: center; }
+.qa-input { flex: 1; border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; font-size: 12px; font-family: 'DM Sans', sans-serif; outline: none; background: var(--bg); color: var(--text); resize: none; height: 36px; line-height: 20px; transition: border-color 0.15s; }
+.qa-input:focus { border-color: var(--navy); background: var(--white); }
+.mic-btn { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
+.mic-btn:hover { background: var(--navy); border-color: var(--navy); }
+.mic-btn:hover svg path, .mic-btn:hover svg rect { stroke: var(--ice); }
+.mic-btn.listening { background: var(--red); border-color: var(--red); animation: micPulse 1s infinite; }
+.mic-btn.listening svg path, .mic-btn.listening svg rect { stroke: white; }
+@keyframes micPulse { 0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,0.4)} 50%{box-shadow:0 0 0 6px rgba(192,57,43,0)} }
+.ask-btn { height: 36px; padding: 0 16px; border-radius: 10px; border: none; background: var(--navy); color: var(--ice); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background 0.15s; flex-shrink: 0; }
+.ask-btn:hover { background: var(--navy-light); }
+.ask-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.voice-status { font-size: 10px; color: var(--red); font-style: italic; min-width: 70px; text-align: center; }
+::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-thumb { background: var(--bg2); border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="sidebar">
+    <div class="logo-bar">
+      <h1>Refinance Review<br>March 2026</h1>
+      <p>25 Mar · Live Slack context</p>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Overview</div>
+      <button class="nav-btn active" onclick="show('exec',this)">Executive Summary</button>
+      <button class="nav-btn" onclick="show('disbursal',this)">Disbursal Summary</button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Channels</div>
+      <button class="nav-btn" onclick="show('c2b',this)">C2B Dropoffs <span class="nav-pill pill-g">+60%</span></button>
+      <button class="nav-btn" onclick="show('diy',this)">D2C – DIY <span class="nav-pill pill-a">-13%</span></button>
+      <button class="nav-btn" onclick="show('phonepe',this)">D2C – PhonePe <span class="nav-pill pill-r">-18%</span></button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Business</div>
+      <button class="nav-btn" onclick="show('revenue',this)">Revenue Metrics</button>
+      <button class="nav-btn" onclick="show('ops',this)">Ops & Payments</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="content-area">
+
+      <!-- EXEC -->
+      <div id="sec-exec" class="section active">
+        <div class="page-header"><div class="page-title">Executive Summary</div><div class="page-sub">MTD as of 25 Mar 2026 · Latest CT included</div></div>
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-lbl">MTD Disbursals</div><div class="stat-val">₹6.16Cr</div><div class="stat-delta up">▲ +0.9% vs LMTD</div></div>
+          <div class="stat-card"><div class="stat-lbl">MTD Count</div><div class="stat-val">121</div><div class="stat-delta up">▲ +8.0% vs LMTD</div></div>
+          <div class="stat-card"><div class="stat-lbl">Avg Loan</div><div class="stat-val">₹4.85L</div><div class="stat-delta flat">▼ -2% vs LMTD</div></div>
+          <div class="stat-card"><div class="stat-lbl">Gross Margin</div><div class="stat-val" style="color:var(--red)">~12-13%</div><div class="stat-delta down">▼ GM data under fix</div></div>
+          <div class="stat-card"><div class="stat-lbl">MTD Leads</div><div class="stat-val">49,284</div><div class="stat-delta up">▲ +7.1% vs LMTD</div></div>
+          <div class="stat-card"><div class="stat-lbl">Workable Leads</div><div class="stat-val" style="color:var(--red)">5,879</div><div class="stat-delta down">▼ -30.9% vs LMTD</div></div>
+          <div class="stat-card"><div class="stat-lbl">Approvals</div><div class="stat-val">370</div><div class="stat-delta up">▲ +1.9% vs LMTD</div></div>
+          <div class="stat-card"><div class="stat-lbl">A,B Band Share</div><div class="stat-val" style="color:var(--amber)">86%</div><div class="stat-delta down">▼ vs 88% LMTD</div></div>
+        </div>
+        <div class="signals">
+          <div class="signal g"><span class="signal-ico">✅</span><span><strong>MTD ₹6.16Cr, +0.9% vs LMTD</strong> — C2B up +15% MoM carrying the book; DIY recovering (+6.8%). Count +8% showing volume recovery even as avg ticket compresses slightly.</span></div>
+          <div class="signal r"><span class="signal-ico">🔴</span><span><strong>WoW momentum broken</strong> — this week avg: Leads 1,469 (-36.8% WoW), Logins 57 (-36.7% WoW), Disbursals ₹21L (-24.5% WoW). Divanshu asked for full explanation on logins. Root cause: data reporting issue (login flag=0 bug from 19 Mar) partly masking real numbers, but actual approvals also down 20-25%.</span></div>
+          <div class="signal r"><span class="signal-ico">🔴</span><span><strong>WL -30.9% MoM despite Leads +7.1%</strong> — Lead→WL conversion rate collapsed. Root cause under investigation. Not explained by CI/VI pause alone (those had minimal login impact per Manik's analysis).</span></div>
+          <div class="signal a"><span class="signal-ico">⚠️</span><span><strong>PhonePe MTD ₹1.42Cr, -17.8% MoM</strong> — structural volume issue: 32L filtered base but only ~3.5L impressions/day realised because PhonePe's DS models control asset impression frequency. New entry points (4 homepage assets) agreed but go-live date not yet confirmed by PhonePe.</span></div>
+          <div class="signal a"><span class="signal-ico">⚠️</span><span><strong>GM data in CT showing wrong</strong> — Harsh flagged to Nitin on 22 Mar. Calculated number and NBFC P&L pull both incorrect. Actual expected range 12.5–13.5%. Do not use CT GM% figures until fixed.</span></div>
+          <div class="signal g"><span class="signal-ico">✅</span><span><strong>Internal Top-up</strong> — Harsh pushed for go-live tomorrow evening (26 Mar). Offer stamping is the only remaining bottleneck. Thursday is AI Hackathon — no bandwidth. Ankit + Priya to drive.</span></div>
+        </div>
+      </div>
+
+      <!-- DISBURSAL -->
+      <div id="sec-disbursal" class="section">
+        <div class="page-header"><div class="page-title">Disbursal Summary</div><div class="page-sub">MTD vs LMTD · as of 25 Mar</div></div>
+        <div class="tbl-wrap">
+          <div class="tbl-head">Channel-wise Disbursals (MTD 25 Mar)</div>
+          <table>
+            <thead><tr><th>Channel</th><th>MTD ₹</th><th>MTD #</th><th>LMTD ₹</th><th>MoM %</th></tr></thead>
+            <tbody>
+              <tr><td>C2B Dropoffs</td><td>₹2.08Cr</td><td>—</td><td>₹1.80Cr</td><td><span class="td-up">+15.0%</span></td></tr>
+              <tr><td>D2C – DIY</td><td>₹2.64Cr</td><td>—</td><td>₹2.47Cr</td><td><span class="td-up">+6.8%</span></td></tr>
+              <tr><td>D2C – PhonePe</td><td>₹1.42Cr</td><td>—</td><td>₹1.73Cr</td><td><span class="td-dn">-17.8%</span></td></tr>
+              <tr><td>Car Info</td><td>—</td><td>0</td><td>—</td><td><span class="td-fl">Paused 16 Mar</span></td></tr>
+              <tr><td>Vehicle Info</td><td>—</td><td>0</td><td>—</td><td><span class="td-fl">Paused 16 Mar</span></td></tr>
+              <tr class="total-row"><td>TOTAL</td><td>₹6.16Cr</td><td>121</td><td>₹6.11Cr</td><td><span class="td-up">+0.9%</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl-wrap">
+          <div class="tbl-head">Own Book vs Pmaxx</div>
+          <table>
+            <thead><tr><th>Book</th><th>MTD ₹</th><th>LMTD ₹</th><th>MoM %</th><th>Mix</th></tr></thead>
+            <tbody>
+              <tr><td>Own Book</td><td>₹2.49Cr</td><td>₹2.52Cr</td><td><span class="td-dn">-1.0%</span></td><td>40.4%</td></tr>
+              <tr><td>Pmaxx</td><td>₹3.67Cr</td><td>₹3.59Cr</td><td><span class="td-up">+2.2%</span></td><td>59.6%</td></tr>
+              <tr class="total-row"><td>Total</td><td>₹6.16Cr</td><td>₹6.11Cr</td><td><span class="td-up">+0.9%</span></td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="signal a"><span class="signal-ico">⚠️</span><span>Pmaxx now at 59.6% mix — OB share declining. Every ₹1Cr shift from OB (12% GM) to Pmaxx (3.5% GM) costs ~₹85L in annualised margin. OB needs a dedicated push.</span></div>
+      </div>
+
+      <!-- C2B -->
+      <div id="sec-c2b" class="section">
+        <div class="page-header"><div class="page-title">C2B Dropoffs</div><div class="page-sub">MTD ₹2.08Cr · +15.0% MoM · Strongest channel</div></div>
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-lbl">MTD Leads</div><div class="stat-val">11,459</div><div class="stat-delta up">▲ +13.7% LMTD</div></div>
+          <div class="stat-card"><div class="stat-lbl">Workable Leads</div><div class="stat-val">1,543</div><div class="stat-delta flat">▼ -0.8%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Logins</div><div class="stat-val">453</div><div class="stat-delta up">▲ +24.5%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Approvals</div><div class="stat-val">111</div><div class="stat-delta up">▲ +42.3%</div></div>
+        </div>
+        <div class="funnel-block">
+          <div class="funnel-title-row">Funnel conversion — MTD</div>
+          <div class="f-row"><div class="f-lbl">Leads</div><div class="f-track"><div class="f-bar" style="width:100%;background:#1a2356">11,459</div></div><div class="f-pct">100%</div></div>
+          <div class="f-row"><div class="f-lbl">Workable Leads</div><div class="f-track"><div class="f-bar" style="width:13.5%;background:#185fa5">1,543</div></div><div class="f-pct">13.5%</div></div>
+          <div class="f-row"><div class="f-lbl">Logins</div><div class="f-track"><div class="f-bar" style="width:3.95%;background:#1d9e75">453</div></div><div class="f-pct">3.95%</div></div>
+          <div class="f-row"><div class="f-lbl">Approvals</div><div class="f-track"><div class="f-bar" style="width:0.97%;background:#2d7a4f">111</div></div><div class="f-pct">0.97%</div></div>
+          <div class="f-row"><div class="f-lbl">Disbursals</div><div class="f-track"><div class="f-bar" style="width:0.32%;background:#b5620a">37</div></div><div class="f-pct">0.32%</div></div>
+        </div>
+        <div class="signals">
+          <div class="signal g"><span class="signal-ico">✅</span><span>Best-performing channel MTD. Approval rate 24.5% vs 21.4% LMTD. CRM scrub quality (Auto IQ + PQ Amber) improving — CTR C2B drop-offs at ~3.5%, delivery 87%.</span></div>
+          <div class="signal a"><span class="signal-ico">⚠️</span><span>Lead→WL at 13.5% — below DIY (18.3%). Bureau rejection at top of funnel remains the ceiling on C2B scalability. L3M enquiry cap blocking good A/B profiles who then route to Pmaxx.</span></div>
+        </div>
+      </div>
+
+      <!-- DIY -->
+      <div id="sec-diy" class="section">
+        <div class="page-header"><div class="page-title">D2C – DIY</div><div class="page-sub">MTD ₹2.64Cr · +6.8% MoM · Orbit fix still pending</div></div>
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-lbl">Leads</div><div class="stat-val">8,543</div><div class="stat-delta down">▼ -9.5%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Workable Leads</div><div class="stat-val" style="color:var(--red)">1,564</div><div class="stat-delta down">▼ -22.2%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Logins</div><div class="stat-val">351</div><div class="stat-delta down">▼ -6.0%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Approvals</div><div class="stat-val">76</div><div class="stat-delta up">▲ +3.3%</div></div>
+        </div>
+        <div class="funnel-block">
+          <div class="funnel-title-row">Funnel conversion — MTD</div>
+          <div class="f-row"><div class="f-lbl">Leads</div><div class="f-track"><div class="f-bar" style="width:100%;background:#1a2356">8,543</div></div><div class="f-pct">100%</div></div>
+          <div class="f-row"><div class="f-lbl">Workable Leads</div><div class="f-track"><div class="f-bar" style="width:18.3%;background:#185fa5">1,564</div></div><div class="f-pct">18.3%</div></div>
+          <div class="f-row"><div class="f-lbl">Logins</div><div class="f-track"><div class="f-bar" style="width:4.1%;background:#1d9e75">351</div></div><div class="f-pct">4.1%</div></div>
+          <div class="f-row"><div class="f-lbl">Approvals</div><div class="f-track"><div class="f-bar" style="width:0.89%;background:#2d7a4f">76</div></div><div class="f-pct">0.89%</div></div>
+          <div class="f-row"><div class="f-lbl">Disbursals</div><div class="f-track"><div class="f-bar" style="width:0.41%;background:#b5620a">35</div></div><div class="f-pct">0.41%</div></div>
+        </div>
+        <div class="signals">
+          <div class="signal r"><span class="signal-ico">🔴</span><span><strong>Orbit car fetch issue</strong> — Apply Now→Lead% dropped from ~20% to ~12% (Jan→Mar). ~8K apply now clicks lost/day. Megha escalated to Divanshu on 2 Mar; fix pending from central tech team. Estimated ₹50L/month disbursal impact. Divanshu's intervention requested.</span></div>
+          <div class="signal a"><span class="signal-ico">⚠️</span><span>TOF normalised post-Facebook campaign spike (Dec–mid Jan). The elevated Dec–Jan traffic was not structurally sustainable per Megha's analysis. DS API issue (Jan 22–Feb 11) also impacted ~₹50L — now fixed.</span></div>
+          <div class="signal g"><span class="signal-ico">✅</span><span>Approvals +3.3% despite lower logins — conversion improving mid-funnel. Disbursal amount recovering (+6.8% MoM).</span></div>
+        </div>
+      </div>
+
+      <!-- PHONEPE -->
+      <div id="sec-phonepe" class="section">
+        <div class="page-header"><div class="page-title">D2C – PhonePe</div><div class="page-sub">MTD ₹1.42Cr · -17.8% MoM · Structural volume problem</div></div>
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-lbl">MTD Leads</div><div class="stat-val">3,394</div><div class="stat-delta down">▼ -9.9%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Workable Leads</div><div class="stat-val">977</div><div class="stat-delta down">▼ -13.8%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Logins</div><div class="stat-val">275</div><div class="stat-delta down">▼ -12.4%</div></div>
+          <div class="stat-card"><div class="stat-lbl">Approvals</div><div class="stat-val">68</div><div class="stat-delta down">▼ -16.0%</div></div>
+        </div>
+        <div class="funnel-block">
+          <div class="funnel-title-row">Funnel conversion — MTD</div>
+          <div class="f-row"><div class="f-lbl">Leads</div><div class="f-track"><div class="f-bar" style="width:100%;background:#1a2356">3,394</div></div><div class="f-pct">100%</div></div>
+          <div class="f-row"><div class="f-lbl">Workable Leads</div><div class="f-track"><div class="f-bar" style="width:28.8%;background:#185fa5">977</div></div><div class="f-pct">28.8%</div></div>
+          <div class="f-row"><div class="f-lbl">Logins</div><div class="f-track"><div class="f-bar" style="width:8.1%;background:#1d9e75">275</div></div><div class="f-pct">8.1%</div></div>
+          <div class="f-row"><div class="f-lbl">Approvals</div><div class="f-track"><div class="f-bar" style="width:2.0%;background:#2d7a4f">68</div></div><div class="f-pct">2.0%</div></div>
+          <div class="f-row"><div class="f-lbl">Disbursals</div><div class="f-track"><div class="f-bar" style="width:0.80%;background:#b5620a">27</div></div><div class="f-pct">0.8%</div></div>
+        </div>
+        <div class="signals">
+          <div class="signal r"><span class="signal-ico">🔴</span><span><strong>Root cause (from Ankit's 11 Mar Slack update):</strong> PhonePe has a 32L whitelisted base but only ~3.5L impressions/day are being served — LAC ads are being suppressed by PhonePe's DS models in favour of PL offers. This is a platform-level algorithmic decision, not a product or funnel issue.</span></div>
+          <div class="signal a"><span class="signal-ico">⚠️</span><span><strong>Fix in progress:</strong> Agreed to take LAC live on 4 additional assets — Homepage top fold banner, widget below banner, "Did you know" bottom fold section, contextual cards under search. All dynamic assets, go-live date TBD (expected "early next week" as of 11 Mar, still pending). Content for assets 1 & 4 was due 12 Mar.</span></div>
+          <div class="signal g"><span class="signal-ico">✅</span><span><strong>Funnel quality when leads do come is strong:</strong> Homepage cohort shows F2-complete 57% vs 30% overall, Login% 30% vs 7%, Approved% 12% vs 2%. The problem is volume, not conversion. Experian rejection only 11% vs 35-40% overall.</span></div>
+        </div>
+      </div>
+
+      <!-- REVENUE -->
+      <div id="sec-revenue" class="section">
+        <div class="page-header"><div class="page-title">Revenue Metrics</div><div class="page-sub">Own Book · MTD 25 Mar · Note: GM% in CT under fix</div></div>
+        <div class="rev-grid">
+          <div class="rev-card"><div class="rev-lbl">Avg RoI (MTD)</div><div class="rev-val">13.6%</div><div class="rev-sub">vs 13.8% LMTD · -2%</div></div>
+          <div class="rev-card"><div class="rev-lbl">COD (MTD)</div><div class="rev-val" style="color:var(--red)">3.4%</div><div class="rev-sub">vs 2.8% LMTD · +21% ⚠️</div></div>
+          <div class="rev-card"><div class="rev-lbl">A,B Band Share</div><div class="rev-val" style="color:var(--amber)">86%</div><div class="rev-sub">vs 88% LMTD · -2pp</div></div>
+          <div class="rev-card"><div class="rev-lbl">LAC Share (Amt)</div><div class="rev-val">87%</div><div class="rev-sub">vs 77% LMTD · +13%</div></div>
+          <div class="rev-card"><div class="rev-lbl">Avg LTV</div><div class="rev-val">91%</div><div class="rev-sub">vs 93% LMTD · -2%</div></div>
+          <div class="rev-card"><div class="rev-lbl">Net VAS</div><div class="rev-val">3.0%</div><div class="rev-sub">vs 2.8% LMTD · +7%</div></div>
+          <div class="rev-card"><div class="rev-lbl">Avg Tenure</div><div class="rev-val">57 mo</div><div class="rev-sub">vs 59 LMTD · -3%</div></div>
+          <div class="rev-card"><div class="rev-lbl">Avg Loan Amt</div><div class="rev-val">₹4.85L</div><div class="rev-sub">vs ₹4.95L LMTD · -2%</div></div>
+        </div>
+        <div class="signal r"><span class="signal-ico">🔴</span><span><strong>GM% data in CT is wrong</strong> — Harsh flagged on 22 Mar (Nitin to fix). Both the calculated number and the NBFC P&L pull are showing incorrect values. Actual expected range 12.5–13.5% based on Feb (13.04%) and Jan (12.19%). Do not present CT GM% to leadership until corrected.</span></div>
+        <div class="signal a" style="margin-top:8px;"><span class="signal-ico">⚠️</span><span>COD at 3.4% vs 2.8% LMTD (+21%) — cost pressure building. Combined with RoI softening 20bps, margin is being squeezed from both sides. Pmaxx at 59.6% compounds this — blended GM significantly below OB-only rate.</span></div>
+      </div>
+
+      <!-- OPS -->
+      <div id="sec-ops" class="section">
+        <div class="page-header"><div class="page-title">Ops & Payments</div><div class="page-sub">DM to Payment · as of 25 Mar 2026</div></div>
+        <div class="tbl-wrap">
+          <div class="tbl-head">DM to Payment Funnel</div>
+          <table>
+            <thead><tr><th>Stage</th><th>MTD #</th><th>MTD ₹</th><th>LMTD #</th><th>LMTD ₹</th></tr></thead>
+            <tbody>
+              <tr><td>DM (Disbursed)</td><td>121</td><td>₹6.16Cr</td><td>112</td><td>₹6.11Cr</td></tr>
+              <tr><td>PM (Marked)</td><td>103</td><td>₹5.23Cr</td><td>—</td><td>—</td></tr>
+              <tr><td>Payment Released</td><td>101</td><td>₹5.05Cr</td><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="signals">
+          <div class="signal a"><span class="signal-ico">⚠️</span><span><strong>Login flag=0 bug</strong> — Auto-logins dropped ~50% from 19 Mar. Root cause: data reporting issue where login flag=0 even though case was logged. Fix deployed, Manik validating. Assisted logins also affected — 24 actual vs 9 reported in CT on 21 Mar. Harsh: also check if approvals leakage exists (approvals down 20-25% since 19 Mar).</span></div>
+          <div class="signal a" style="margin-top:8px;"><span class="signal-ico">⚠️</span><span><strong>TnC acceptance very low</strong> — consistently 1–5/day vs 20+ approvals/day. Friction point between approval and disbursal. Not being actively investigated; worth flagging as a conversion lever.</span></div>
+          <div class="signal g" style="margin-top:8px;"><span class="signal-ico">✅</span><span>PM Activity View showing ₹5.41Cr PM Released and ₹5.90Cr Payment Released — ops team clearing backlog effectively.</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Q&A -->
+    <div class="qa-zone">
+      <div class="qa-header">
+        <div class="qa-header-left"><div class="qa-pulse"></div>Ask the review — Slack context loaded</div>
+      </div>
+      <div class="qa-chips">
+        <span class="chip" onclick="chip('Why are PhonePe leads going down?')">Why PhonePe leads down?</span>
+        <span class="chip" onclick="chip('Why is gross margin down and is the data reliable?')">Is GM data reliable?</span>
+        <span class="chip" onclick="chip('What is causing the login drop since March 19?')">Login drop cause?</span>
+        <span class="chip" onclick="chip('What are the top 3 actions for this week?')">Top 3 actions</span>
+        <span class="chip" onclick="chip('What is the status of Internal Top-up go-live?')">Internal Top-up status</span>
+        <span class="chip" onclick="chip('Why is workable lead conversion falling despite more leads?')">WL conversion drop?</span>
+      </div>
+      <div class="qa-messages" id="qa-msgs">
+        <div class="msg-visual"><div class="vis-text">Slack context loaded — I know why PhonePe leads are down, the login bug from 19 Mar, GM data issues, and Internal Top-up status. Ask anything.</div></div>
+      </div>
+      <div class="qa-input-row">
+        <textarea class="qa-input" id="qa-in" placeholder="Type or speak..." onkeydown="handleKey(event)"></textarea>
+        <span class="voice-status" id="vs"></span>
+        <button class="mic-btn" id="mic" onclick="toggleMic()" title="Voice input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="2" width="6" height="13" rx="3" stroke="#6b6960" stroke-width="1.5"/>
+            <path d="M5 10a7 7 0 0014 0" stroke="#6b6960" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="12" y1="17" x2="12" y2="21" stroke="#6b6960" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="9" y1="21" x2="15" y2="21" stroke="#6b6960" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="ask-btn" id="ask-btn" onclick="ask()">Ask</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id,el){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active');if(el)el.classList.add('active');}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask();}}
+function chip(q){document.getElementById('qa-in').value=q;ask();}
+
+// VOICE
+let recognition=null,listening=false;
+function toggleMic(){
+  if(!('webkitSpeechRecognition'in window)&&!('SpeechRecognition'in window)){document.getElementById('vs').textContent='Not supported';return;}
+  if(listening){recognition.stop();return;}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  recognition=new SR();recognition.lang='en-IN';recognition.continuous=false;recognition.interimResults=true;
+  recognition.onstart=()=>{listening=true;document.getElementById('mic').classList.add('listening');document.getElementById('vs').textContent='● Listening…';};
+  recognition.onresult=(e)=>{const t=Array.from(e.results).map(r=>r[0].transcript).join('');document.getElementById('qa-in').value=t;if(e.results[e.results.length-1].isFinal)recognition.stop();};
+  recognition.onend=()=>{listening=false;document.getElementById('mic').classList.remove('listening');document.getElementById('vs').textContent='';const q=document.getElementById('qa-in').value.trim();if(q)setTimeout(ask,200);};
+  recognition.onerror=()=>{listening=false;document.getElementById('mic').classList.remove('listening');document.getElementById('vs').textContent='';};
+  recognition.start();
+}
+
+const SYSTEM = `You are an AI assistant embedded in the Cars24 Financial Services (CFSPL) Refinance/LAC business review dashboard. You have full context from both the CT data AND Slack messages. Answer questions precisely using specific numbers. Return ONLY valid JSON.
+
+=== QUANTITATIVE DATA (MTD 25 Mar 2026) ===
+MTD Disbursals: ₹6.16Cr (121 count) | LMTD: ₹6.11Cr (+0.9%) | LM (Feb): ₹7.78Cr
+Own Book: ₹2.49Cr (40.4% mix) | Pmaxx: ₹3.67Cr (59.6% mix)
+WoW this week: Leads 1,469/day (-36.8% WoW) | Logins 57/day (-36.7% WoW) | Disbursal Amt ₹21L/day (-24.5% WoW)
+Leads MTD: 49,284 (+7.1% LMTD) | WL: 5,879 (-30.9% LMTD) | Logins: 1,581 (+2.9%) | Approvals: 370 (+1.9%) | Disbursals: 121 (+8%)
+Revenue: Avg Loan ₹4.85L | A,B Share 86% | RoI 13.6% | COD 3.4% (vs 2.8% LMTD) | Net VAS 3.0% | LTV 91%
+GM%: DATA UNRELIABLE — Harsh flagged to Nitin on 22 Mar, both calculated and P&L pull showing wrong values. Expected 12.5-13.5%.
+
+Channels MTD (25 Mar):
+C2B: ₹2.08Cr +15% MoM | Leads 11,459 (+13.7%) WL 1,543 Logins 453 (+24.5%) Approvals 111 (+42.3%)
+DIY: ₹2.64Cr +6.8% MoM | Leads 8,543 (-9.5%) WL 1,564 (-22.2%) Logins 351 Approvals 76 (+3.3%)
+PhonePe: ₹1.42Cr -17.8% MoM | Leads 3,394 (-9.9%) WL 977 (-13.8%) Logins 275 (-12.4%) Approvals 68 (-16%)
+Car Info + Vehicle Info: Paused 16 Mar. CI was ~650 leads/day (stopped 17-18 Mar), VI ~81/day.
+
+=== SLACK INTELLIGENCE (Key qualitative context) ===
+
+PHONEPE LEAD DROP ROOT CAUSE (Ankit, 11 Mar Slack):
+- PhonePe has 32L filtered/whitelisted base but only ~3.5L impressions/day being served
+- Root cause: PhonePe's DS (data science) models control asset impression frequency — they are suppressing LAC ads in favour of PL (personal loan) offers
+- This is algorithmic suppression by PhonePe platform, NOT a product/funnel issue
+- Fix agreed: LAC to go live on 4 additional homepage assets (top fold banner, widget below banner, "Did you know" bottom fold, contextual cards under search)
+- These assets are dynamic — impression frequency controlled by PhonePe's DS models, not product team
+- Content for assets 1&4 was due 12 Mar; go-live expected "early next week" as of 11 Mar (still pending confirmation from PhonePe as of 25 Mar)
+- When homepage leads DO come, quality is very strong: F2-complete 57% vs 30% overall; Login% 30% vs 7%; Approval% 12% vs 2%; Experian rejection only 11% vs 35-40% overall
+- Manik (15 Mar): "PhonePe remains the drag — disbursal amt down, volume is the issue not conversion — needs channel-level review"
+
+LOGIN DROP FROM 19 MAR (Harsh, Rahul, Manik Slack):
+- Auto-logins dropped ~50% from 19 Mar
+- Root cause: data reporting bug — login_flag=0 for cases that actually got logged in (DE integration issue)
+- Fix deployed by Manik; Rahul validating — 6 of 19 assisted logins showing in auto-login bucket (validation ongoing)
+- Assisted logins also affected: 24 actual vs 9 reported in CT on 21 Mar (Rahul confirmed this)
+- Harsh: "approvals also down 20-25% since this issue — check if cases with login_flag=0 reached assessment stage, any leakage there?"
+- Divanshu (25 Mar): "Logins ka kya status hai? Still data issue or actual drops? Need full explanation."
+- Status: Not yet fully resolved as of 25 Mar
+
+WL DROP ROOT CAUSE:
+- WL -30.9% MoM despite Leads +7.1% — Lead-to-WL conversion rate collapsed
+- CI/VI pause only explains a small part (Manik: CI/VI had minimal login impact, ~3-4 logins/day)
+- DIY specific: Orbit car fetch issue — Apply Now→Lead% dropped 20%→12% (estimated ₹50L/month impact)
+- Root cause of broader WL drop not yet diagnosed in Slack; under investigation
+
+DIY ISSUES (Megha, 2 Mar Slack):
+- Orbit car fetch collapsed from ~10K→800 cars/day post Jan 2026 → Apply Now% fell 20%→12% → ~₹50L disbursal impact
+- DS API issue (Jan 22–Feb 11) caused asset attach failures; fix deployed 12 Feb (~₹50L impact)
+- Meta/Facebook campaign spike in Dec–mid Jan inflated TOF; normalised now (not structurally sustainable)
+- Megha escalated Orbit fix to Divanshu; waiting on central tech team; Dushant Singh unreachable
+
+INTERNAL TOP-UP STATUS (Harsh, 24 Mar Slack):
+- Harsh pushed for go-live tomorrow evening (26 Mar): "Can we push and target tomorrow evening go-live? Assuming offer stamping is the only bottleneck?"
+- Thursday is AI Hackathon — no bandwidth for go-live that day
+- Channel: PFL_BT on LeadX → Superleap → VKYC + fresh e-NACH
+- Open items per Piyush (23 Mar): LeadX stages pending from Megha; BRE rejection list to be confirmed by Nikunj
+- NACH: validated for continuity and sufficiency (POS + Top-up < NACH amount)
+- KYC: Decided to collect fresh VKYC from every customer (not reuse)
+
+GM DATA ISSUE (Harsh, 22 Mar Slack):
+- "GM numbers in control tower revenue metrics are wrong — both the calculated number AND the pull from NBFC P&L sheet"
+- Asked Nitin to rectify first thing 22 Mar morning
+- Expected range per Harsh: 12.5–13.5%
+- Feb actual GM: 13.04% | Jan: 12.19%
+
+WoW DECLINE CONTEXT (Divanshu, 21 Mar Slack):
+- Divanshu asked: "Why are overall leads down? Need full explanation on logins — 3 days in a row. What changed in last 3 days - CI/VI?"
+- Manik explained: CI organic stop (~50% of total lead decline) + C2B call centre leads stopped (C2B CC was shut down — do not reference as active)
+- PhonePe's own decline is separate — algorithmic suppression issue described above
+
+INTERNAL TOP-UP OPS DETAIL (#refi-internal-topup, 23 Mar):
+- Fresh e-NACH required for every customer — Sandeep confirmed RBI e-mandate rules prohibit reusing NACH across loan IDs
+- Offer stamping: Ankit asked Sandeep to close by 23 Mar — this remains the bottleneck for go-live
+- Agent training: Ankit asked Dhruv to start training 2 associates for sourcing (TnC acceptance)
+- Bajaj base: Priya asked Abhishek + Mayank to map risk bucket and income for Internal Top-up on Bajaj cases (20 Mar)
+- Policy constraint: MOB 12 minimum limits opportunity to ~₹55Cr. Harsh pushing for MOB 6/9 — Sandeep resisting (risky without performance history, aggressive LTVs already offered). Harsh: "With 6% funnel on ₹55Cr, total biz = ₹3Cr — too less."
+- VKYC: Fresh VKYC from every customer (decided — no KYC reuse)
+- FCU: Rule-based FI/VPD waiver cohorts to be developed
+
+OPS DISBURSAL DAILY (from #refinance-working-team):
+- 25 Mar planned: 8 cases (OB 3 = ₹14.3L, Pmaxx 5 = ₹10.6L) + 4 more cases (₹29.1L) = ~₹53.9L planned today
+- Key committed-not-done cases: Customer ROI objection asking 12%, Devendra Sawant RTO charge dispute, FCU sampling pending cases
+- Pattern: Multiple cases daily stuck due to customer not responding, RTO document collection issues, runner unavailability
+
+BROADER CONTEXT:
+- AOP Mar'27 exit: ₹25Cr (LAC + PL), OB at ₹20Cr. EBITDA Apr'26 breakeven; ₹1.4Cr EBITDA Mar'27 exit.
+- PA (Pre-Approved) program is the major AOP growth driver (~₹15Cr LAC by Mar'27). AI + F2 banking attach pilot going live (Jay Patel + Priya SPOC).
+- TnC acceptance very low (1-5/day vs 20+ approvals/day) — friction point, not being actively worked.
+- L3M enquiry cap blocking good A/B profiles who get routed to Pmaxx (these cases avg 15.5% RoI vs 3.5% Pmaxx GM).
+- AI Hackathon is Thursday 26 Mar — no team bandwidth that day for go-live activities.
+
+Return ONLY valid JSON in one of these formats:
+
+1. Comparison: {"type":"compare","title":"...","left":{"period":"...","value":"...","note":"..."},"right":{"period":"...","value":"...","note":"..."},"insight":"..."}
+2. Stats grid: {"type":"stats","title":"...","items":[{"label":"...","value":"...","delta":"...","trend":"up|down|flat"}]}
+3. Bar chart: {"type":"bars","title":"...","items":[{"label":"...","value":NUMBER,"max":NUMBER,"color":"#hex","display":"..."}],"insight":"..."}
+4. Action list: {"type":"actions","title":"...","items":[{"title":"...","detail":"...","owner":"..."}]}
+5. Insight card: {"type":"insight","content":"2-4 sentences with specific numbers and Slack context"}
+6. Text: {"type":"text","content":"..."}
+
+Use "insight" type when the answer needs qualitative Slack context (e.g. root causes, blockers, decisions). Always cite specific numbers and specific people/dates from Slack when relevant.`;
+
+async function ask(){
+  const inp=document.getElementById('qa-in');
+  const q=inp.value.trim();
+  if(!q)return;
+  const btn=document.getElementById('ask-btn');
+  const msgs=document.getElementById('qa-msgs');
+  msgs.innerHTML+=`<div class="msg-user">${q}</div>`;
+  inp.value='';btn.disabled=true;
+  const t=document.createElement('div');t.className='msg-visual';
+  t.innerHTML='<div class="vis-thinking">Analysing with Slack context…</div>';
+  msgs.appendChild(t);msgs.scrollTop=msgs.scrollHeight;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'REDACTED_ANTHROPIC_API_KEY','anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:SYSTEM,messages:[{role:'user',content:q}]})});
+    const data=await res.json();
+    const raw=data.content?.find(b=>b.type==='text')?.text||'{}';
+    let parsed;try{parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());}catch{parsed={type:'text',content:raw};}
+    t.innerHTML=renderVisual(parsed);
+  }catch(e){t.innerHTML='<div class="vis-text">Could not reach AI. Please try again.</div>';}
+  btn.disabled=false;msgs.scrollTop=msgs.scrollHeight;
+}
+
+function renderVisual(d){
+  const titleHTML=d.title?`<div style="font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">${d.title}</div>`:'';
+  if(d.type==='compare'){
+    const lc=d.left&&d.right&&parseFloat(d.left.value)>parseFloat(d.right.value)?'var(--green)':'var(--red)';
+    return`<div>${titleHTML}<div class="vis-compare"><div class="vc-card"><div class="vc-period">${d.left.period}</div><div class="vc-val" style="color:${lc}">${d.left.value}</div><div class="vc-note">${d.left.note||''}</div></div><div class="vc-arrow">→</div><div class="vc-card"><div class="vc-period">${d.right.period}</div><div class="vc-val">${d.right.value}</div><div class="vc-note">${d.right.note||''}</div></div></div>${d.insight?`<div style="font-size:11px;color:var(--text2);margin-top:8px;padding:8px 10px;background:var(--bg);border-radius:8px;line-height:1.5">${d.insight}</div>`:''}</div>`;
+  }
+  if(d.type==='stats'){
+    const cards=(d.items||[]).map(i=>{const col=i.trend==='up'?'var(--green)':i.trend==='down'?'var(--red)':'var(--text3)';const arr=i.trend==='up'?'▲':i.trend==='down'?'▼':'—';return`<div class="vis-stat"><div class="vs-lbl">${i.label}</div><div class="vs-val" style="color:${i.trend==='down'?'var(--red)':i.trend==='up'?'var(--green)':'var(--text)'}">${i.value}</div>${i.delta?`<div class="vs-delta" style="color:${col}">${arr} ${i.delta}</div>`:''}</div>`;}).join('');
+    return`<div>${titleHTML}<div class="vis-stat-grid">${cards}</div></div>`;
+  }
+  if(d.type==='bars'){
+    const rows=(d.items||[]).map(i=>{const pct=Math.max(2,Math.round((i.value/i.max)*100));return`<div class="vb-row"><div class="vb-lbl">${i.label}</div><div class="vb-track"><div class="vb-fill" style="width:${pct}%;background:${i.color||'var(--navy)'}">${pct>15?i.display:''}</div></div><div class="vb-val">${i.display}</div></div>`;}).join('');
+    return`<div class="vis-bars">${titleHTML}${rows}${d.insight?`<div style="font-size:11px;color:var(--text2);margin-top:8px;line-height:1.5">${d.insight}</div>`:''}</div>`;
+  }
+  if(d.type==='actions'){
+    const cards=(d.items||[]).map((a,i)=>`<div class="va-card"><div class="va-num">${i+1}</div><div class="va-body"><div class="va-title">${a.title}</div><div class="va-detail">${a.detail||''}</div>${a.owner?`<div class="va-owner">Owner: ${a.owner}</div>`:''}</div></div>`).join('');
+    return`<div class="vis-actions">${titleHTML}${cards}</div>`;
+  }
+  if(d.type==='insight'){
+    return`<div class="vis-insight">${d.content}</div>`;
+  }
+  return`<div class="vis-text">${d.content||JSON.stringify(d)}</div>`;
+}
+</script>
+</body>
+</html>`;
